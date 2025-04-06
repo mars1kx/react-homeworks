@@ -1,15 +1,22 @@
 import './App.css'
+import Header from './components/Header'
+import MenuSection from './components/MenuSection'
+import BackgroundWrapper from './components/BackgroundWrapper'
+import Footer from './components/Footer'
+import burgers from './__mocks__/products'
 
 function App() {
-  const items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
   return (
-    <div>
-      <h1>List of Items</h1>
-      <ul>
-        {items.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
+    <div className="app">
+      <Header />
+      
+      <BackgroundWrapper>
+        <main>
+          <MenuSection products={burgers} />
+        </main>
+      </BackgroundWrapper>
+      
+      <Footer />
     </div>
   )
 }
