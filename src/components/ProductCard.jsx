@@ -1,6 +1,17 @@
+import { useState } from 'react'
 import './ProductCard.css'
 
-function ProductCard({ product, itemCount, onItemCountChange, onAddToCart }) {
+function ProductCard({ product, onAddToCart }) {
+  const [itemCount, setItemCount] = useState(1);
+
+  const handleCountChange = (value) => {
+    setItemCount(value < 1 ? 1 : value);
+  };
+
+  const handleAddToCart = () => {
+    onAddToCart(product.id, itemCount);
+  };
+
   return (
     <div className="product-card">
       <div className="product-image-container">
@@ -17,14 +28,14 @@ function ProductCard({ product, itemCount, onItemCountChange, onAddToCart }) {
             <input 
               type="number" 
               min="1" 
-              value={itemCount[product.id] || 1} 
-              onChange={(e) => onItemCountChange(product.id, parseInt(e.target.value) || 1)}
+              value={itemCount} 
+              onChange={(e) => handleCountChange(parseInt(e.target.value) || 1)}
               className="quantity-input"
             />
           </div>
           <button 
             className="add-to-cart-button"
-            onClick={() => onAddToCart(product.id)}
+            onClick={handleAddToCart}
           >
             Add to cart
           </button>

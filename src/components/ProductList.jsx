@@ -1,15 +1,17 @@
 import './ProductList.css'
 import ProductCard from './ProductCard'
 
-function ProductList({ products, itemCount, onItemCountChange, onAddToCart }) {
+function ProductList({ products, onAddToCart }) {
+  if (products.length === 0) {
+    return <div className="no-products">Нет продуктов в данной категории</div>;
+  }
+
   return (
     <div className="products-grid">
       {products.map((product) => (
         <ProductCard 
           key={product.id}
           product={product}
-          itemCount={itemCount}
-          onItemCountChange={onItemCountChange}
           onAddToCart={onAddToCart}
         />
       ))}

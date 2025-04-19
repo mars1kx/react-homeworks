@@ -1,26 +1,19 @@
 import './CategoryFilter.css'
 
-function CategoryFilter({ activeCategory, onCategoryChange }) {
+function CategoryFilter({ activeCategory, onCategoryChange, products }) {
+  const categories = [...new Set(products.map(product => product.category))];
+
   return (
     <div className="category-filter">
-      <button 
-        className={`category-button ${activeCategory === 'desert' ? 'active' : ''}`}
-        onClick={() => onCategoryChange('desert')}
-      >
-        Desert
-      </button>
-      <button 
-        className={`category-button ${activeCategory === 'dinner' ? 'active' : ''}`}
-        onClick={() => onCategoryChange('dinner')}
-      >
-        Dinner
-      </button>
-      <button 
-        className={`category-button ${activeCategory === 'breakfast' ? 'active' : ''}`}
-        onClick={() => onCategoryChange('breakfast')}
-      >
-        Breakfast
-      </button>
+      {categories.map(category => (
+        <button 
+          key={category}
+          className={`category-button ${activeCategory === category ? 'active' : ''}`}
+          onClick={() => onCategoryChange(category)}
+        >
+          {category}
+        </button>
+      ))}
     </div>
   )
 }

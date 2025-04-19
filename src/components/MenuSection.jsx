@@ -5,19 +5,14 @@ import ProductList from './ProductList'
 import Tooltip from './Tooltip'
 
 function MenuSection({ products }) {
-  const [categoryFilter, setCategoryFilter] = useState('desert');
-  const [itemCount, setItemCount] = useState({});
+  const initialCategory = products.length > 0 ? products[0].category : '';
+  const [categoryFilter, setCategoryFilter] = useState(initialCategory);
   
-  const handleItemCountChange = (id, count) => {
-    setItemCount(prev => ({
-      ...prev,
-      [id]: count
-    }));
+  const handleAddToCart = (id, count) => {
+    console.log(`Добавлен товар #${id} в корзину в количестве ${count} штук`);
   };
   
-  const handleAddToCart = (id) => {
-    console.log(`Добавлен товар #${id} в корзину`);
-  };
+  const filteredProducts = products.filter(product => product.category === categoryFilter);
   
   return (
     <div className="main-content">
@@ -28,13 +23,12 @@ function MenuSection({ products }) {
       
       <CategoryFilter 
         activeCategory={categoryFilter} 
-        onCategoryChange={setCategoryFilter} 
+        onCategoryChange={setCategoryFilter}
+        products={products}
       />
       
       <ProductList 
-        products={products}
-        itemCount={itemCount}
-        onItemCountChange={handleItemCountChange}
+        products={filteredProducts}
         onAddToCart={handleAddToCart}
       />
       

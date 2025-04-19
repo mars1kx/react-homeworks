@@ -7,6 +7,17 @@
   margin-bottom: 40px;
 }
 
+.no-products {
+  font-size: 18px;
+  color: #777;
+  text-align: center;
+  padding: 30px;
+  border: 1px dashed #ddd;
+  border-radius: 8px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
 @media screen and (max-width: 900px) {
   .products-grid {
     grid-template-columns: 1fr;
