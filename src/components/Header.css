@@ -100,6 +100,20 @@
 	right: -8px;
 }
 
+.cart-total {
+	position: absolute;
+	bottom: -30px;
+	right: -20px;
+	font-weight: 600;
+	color: #22577A;
+	font-size: 14px;
+	background-color: #f0f0f0;
+	padding: 4px 8px;
+	border-radius: 4px;
+	white-space: nowrap;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* Адаптивные стили */
 @media screen and (max-width: 1200px) {
 	.header-content {

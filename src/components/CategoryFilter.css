@@ -1,28 +1,46 @@
-/* Стили для фильтров категорий */
+
 .category-filter {
   display: flex;
   gap: 20px;
   margin-bottom: 40px;
+  justify-content: center
 }
 
 .category-button {
   padding: 16px 46px;
-  background-color: transparent;
   border: 1px solid rgba(97, 114, 131, 0.20);
   border-radius: 6px;
   font-size: 15px;
-  cursor: pointer;
+  cursor: default;
   transition: all 0.3s;
+  color: #333;
 }
 
-.category-button.active {
-  background-color: rgba(53, 184, 190, 1);
+
+.category-button:first-child {
+  background-color: #35B8BE; 
   color: white;
   border: none;
 }
 
+
+.category-button:hover {
+  background-color: inherit;
+}
+
+
+.category-button.active {
+  
+}
+
 .category-button:not(.active):hover {
-  background-color: rgba(53, 184, 190, 0.1);
+  
+}
+
+
+.category-button.disabled {
+  opacity: 1; 
+  pointer-events: none;
 }
 
 @media screen and (max-width: 576px) {
