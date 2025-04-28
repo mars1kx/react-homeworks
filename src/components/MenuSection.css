@@ -7,7 +7,8 @@
 
 .menu-title {
   font-size: 56px;
-  color: rgba(8, 9, 10, 1);
+  color: rgba(53, 184, 190, 1);
+  font-weight: 400;
   margin-bottom: 15px;
 }
 
@@ -26,8 +27,8 @@
 }
 
 .see-more-button {
-  background-color: rgba(53, 184, 190, 0.1);
-  color: rgba(53, 184, 190, 1);
+  background-color: rgba(53, 184, 190, 1);
+  color: rgba(255, 255, 255, 1);
   border: none;
   border-radius: 6px;
   padding: 16px 46px;

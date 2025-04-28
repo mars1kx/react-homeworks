@@ -1,35 +1,26 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './CategoryFilter.css'
 
-class CategoryFilter extends Component {
-  render() {
-    const { activeCategory, onCategoryChange, products, disabled } = this.props;
-    
-    const categories = [...new Set(products.map(product => product.category))];
-    
-    if (categories.length === 0) {
-      return null;
-    }
-
-    return (
-      <div className="category-filter">
-        {categories.map(category => (
-          <button 
-            key={category}
-            className={`category-button ${activeCategory === category ? 'active' : ''} ${disabled ? 'disabled' : ''}`}
-            onClick={disabled ? null : () => onCategoryChange(category)}
-            disabled={disabled}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-    )
+const CategoryFilter = ({ activeCategory, onCategoryChange, products, disabled }) => {
+  const categories = [...new Set(products.map(product => product.category))];
+  
+  if (categories.length === 0) {
+    return null;
   }
-}
 
-CategoryFilter.defaultProps = {
-  disabled: false
-};
+  return (
+    <div className="category-filter">
+      {categories.map(category => (
+        <button 
+          key={category}
+          className={`category-button ${activeCategory === category ? 'active' : ''}`}
+          onClick={() => onCategoryChange(category)}
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+  )
+}
 
 export default CategoryFilter 

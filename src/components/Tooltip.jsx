@@ -1,41 +1,31 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './Tooltip.css';
 
-class Tooltip extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isVisible: false
-    };
+const Tooltip = ({ children, text }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsVisible(true);
   }
 
-  handleMouseEnter = () => {
-    this.setState({ isVisible: true });
+  const handleMouseLeave = () => {
+    setIsVisible(false);
   }
 
-  handleMouseLeave = () => {
-    this.setState({ isVisible: false });
-  }
-
-  render() {
-    const { children, text } = this.props;
-    const { isVisible } = this.state;
-
-    return (
-      <span 
-        className="tooltip-container"
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-      >
-        {children}
-        {isVisible && (
-          <span className="tooltip-text">
-            {text}
-          </span>
-        )}
-      </span>
-    );
-  }
+  return (
+    <span 
+      className="tooltip-container"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+      {isVisible && (
+        <span className="tooltip-text">
+          {text}
+        </span>
+      )}
+    </span>
+  );
 }
 
 export default Tooltip; 

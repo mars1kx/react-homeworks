@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './Footer.css'
 import Logo from '../assets/Logo.svg'
 import InstagramIcon from '../assets/social-instagram.svg'
@@ -39,51 +39,49 @@ const footerConfig = {
   ]
 };
 
-class Footer extends Component {
-  render() {
-    return (
-      <div className="footer-wrapper">
-        <footer className="footer">
-          <div className="footer-content">
-            <div className="footer-column footer-logo-column">
-              <div className="logo-container">
-                <img src={Logo} alt="Logo" className="logo-icon" />
-              </div>
-              <p className="tagline">Takeaway & Delivery template<br />for small - medium businesses.</p>
+const Footer = () => {
+  return (
+    <div className="footer-wrapper">
+      <footer className="footer">
+        <div className="footer-content">
+          <div className="footer-column footer-logo-column">
+            <div className="logo-container">
+              <img src={Logo} alt="Logo" className="logo-icon" />
             </div>
+            <p className="tagline">Takeaway & Delivery template<br />for small - medium businesses.</p>
+          </div>
 
-            <div className="footer-columns-container">
-              {footerConfig.columns.map((column, index) => (
-                <div key={index} className="footer-column">
-                  <p className="footer-column-titles">{column.title}</p>
-                  <ul>
-                    {column.links.map((link, linkIndex) => (
-                      <li key={linkIndex}>
-                        <a href={link.url}>{link.title}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+          <div className="footer-columns-container">
+            {footerConfig.columns.map((column, index) => (
+              <div key={index} className="footer-column">
+                <p className="footer-column-titles">{column.title}</p>
+                <ul>
+                  {column.links.map((link, linkIndex) => (
+                    <li key={linkIndex}>
+                      <a href={link.url}>{link.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-          
-          <div className="footer-bottom">
-            <div className="footer-credits">
-              <p>Built by <a href="#flowbase" className="highlight">Flowbase</a>. Powered by <a href="#webflow" className="highlight">Webflow</a></p>
-            </div>
-            <div className="footer-social">
-              {footerConfig.socialLinks.map((social, index) => (
-                <a key={index} href={social.url} className="social-icon">
-                  <img src={social.icon} alt={social.alt} />
-                </a>
-              ))}
-            </div>
+        </div>
+        
+        <div className="footer-bottom">
+          <div className="footer-credits">
+            <p>Built by <a href="#flowbase" className="highlight">Flowbase</a>. Powered by <a href="#webflow" className="highlight">Webflow</a></p>
           </div>
-        </footer>
-      </div>
-    )
-  }
+          <div className="footer-social">
+            {footerConfig.socialLinks.map((social, index) => (
+              <a key={index} href={social.url} className="social-icon">
+                <img src={social.icon} alt={social.alt} />
+              </a>
+            ))}
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
 }
 
 export default Footer
