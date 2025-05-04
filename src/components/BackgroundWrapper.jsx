@@ -1,11 +1,16 @@
+import React, { Component } from 'react'
 import './BackgroundWrapper.css'
 
-function BackgroundWrapper({ children }) {
-  return (
-    <div className="background-wrapper">
-      {children}
-    </div>
-  )
+class BackgroundWrapper extends Component {
+  render() {
+    const { children } = this.props;
+    
+    return (
+      <div className="background-wrapper">
+        {children}
+      </div>
+    )
+  }
 }
 
 export default BackgroundWrapper 
