@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
-import Header from './components/Header'
-import MenuSection from './components/MenuSection'
-import BackgroundWrapper from './components/BackgroundWrapper'
-import Footer from './components/Footer'
+import Header from './components/Header/Header'
+import MenuSection from './components/MenuSection/MenuSection'
+import BackgroundWrapper from './components/BackgroundWrapper/BackgroundWrapper'
+import Footer from './components/Footer/Footer'
 import { fetchMeals } from './__mocks__/api'
 
 const App = () => {
