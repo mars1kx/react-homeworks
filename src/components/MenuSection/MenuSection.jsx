@@ -3,11 +3,13 @@ import './MenuSection.css';
 import CategoryFilter from '../CategoryFilter/CategoryFilter';
 import ProductList from '../ProductList/ProductList';
 import Tooltip from '../Tooltip/Tooltip';
-import { saveOrder } from '../../__mocks__/api';
+import { saveOrderApi } from '../../__mocks__/api';
+import { useFetch } from '../../hooks';
 
 const MenuSection = ({ products }) => {
   const [visibleItemsCount, setVisibleItemsCount] = useState(6);
   const [categoryFilter, setCategoryFilter] = useState(null);
+  const { fetchData } = useFetch();
 
   const handleCategoryChange = (category) => {
     // Если пользователь нажимает на ту же категорию, сбрасываем фильтр
@@ -34,7 +36,8 @@ const MenuSection = ({ products }) => {
 
   const handleSaveOrder = async (mealId, count) => {
     try {
-      await saveOrder(mealId, count);
+      const { url, options } = saveOrderApi(mealId, count);
+      await fetchData(url, options);
     } catch (error) {
       console.error('Ошибка при сохранении заказа:', error);
     }
