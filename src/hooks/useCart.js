@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
-import { fetchOrders } from '../../__mocks__/api'
+import { getOrdersApi } from '../__mocks__/api'
+import { useFetch } from './useFetch'
 
-const useCartEvents = () => {
+export const useCart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [orders, setOrders] = useState([]);
+  const { fetchData } = useFetch();
 
   useEffect(() => {
     fetchOrdersData();
@@ -46,7 +48,8 @@ const useCartEvents = () => {
 
   const fetchOrdersData = async () => {
     try {
-      const ordersData = await fetchOrders();
+      const { url, options } = getOrdersApi();
+      const ordersData = await fetchData(url, options);
       setOrders(ordersData);
     } catch (error) {
       console.error('Ошибка при загрузке заказов:', error);
@@ -59,6 +62,4 @@ const useCartEvents = () => {
     getCartItemsCount,
     getCartTotal
   };
-}
-
-export default useCartEvents; 
+} 

@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './Header.css'
 import logoSvg from '../../assets/Logo.svg'
 import cartSvg from '../../assets/Cart.svg'
-import useCartEvents from './CartEventsManager'
+import { useCart } from '../../hooks'
 
 const Header = () => {
-  const { getCartItemsCount, getCartTotal } = useCartEvents();
+  const { getCartItemsCount, getCartTotal } = useCart();
   
   const cartCount = getCartItemsCount();
   const cartTotal = getCartTotal().toFixed(2);
@@ -14,16 +15,18 @@ const Header = () => {
     <header className="header">
       <div className="header-content">
         <div className="logo-container">
-          <img src={logoSvg} alt="Logo" className="logo-icon" />
+          <Link to="/">
+            <img src={logoSvg} alt="Logo" className="logo-icon" />
+          </Link>
         </div>
         
         <div className="navigation-cart-container">
           <nav className="nav-menu">
             <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#menu">Menu</a></li>
-              <li><a href="#company">Company</a></li>
-              <li><a href="#login">Login</a></li>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/menu">Menu</Link></li>
+              <li><Link to="#company">Company</Link></li>
+              <li><Link to="#login">Login</Link></li>
             </ul>
           </nav>
           
