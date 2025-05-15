@@ -1,8 +1,8 @@
 import React from 'react';
-import './BackgroundWrapper.css';
+import './BackgroundWrapperHome.css';
 
 const BackgroundWrapper = ({ children }) => {
-  return <div className="background-wrapper">{children}</div>;
+  return <div className="background-wrapper-home">{children}</div>;
 };
 
 export default BackgroundWrapper; 

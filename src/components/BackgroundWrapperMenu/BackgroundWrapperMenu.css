@@ -1,11 +1,11 @@
-.background-wrapper {
+.background-wrapper-menu {
 	width: 100%;
 	position: relative;
 	padding: 0 0 50px;
 	overflow: hidden;
 }
 
-.background-wrapper::before {
+.background-wrapper-menu::before {
 	content: '';
 	position: absolute;
 	top: 0;
