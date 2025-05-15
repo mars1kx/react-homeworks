@@ -1,65 +1,67 @@
-import { useState, useEffect } from 'react'
-import { getOrdersApi } from '../__mocks__/api'
-import { useFetch } from './useFetch'
+import { useState, useEffect } from "react";
+import { getOrdersApi } from "../__mocks__/api";
+import { useFetch } from "./useFetch";
 
 export const useCart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [orders, setOrders] = useState([]);
-  const { fetchData } = useFetch();
+
+  const { url, options } = getOrdersApi();
+  const { data } = useFetch(url, options);
 
   useEffect(() => {
-    fetchOrdersData();
-    window.addEventListener('add-to-cart', handleAddToCartEvent);
-    
+    if (data) {
+      setOrders(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    window.addEventListener("add-to-cart", handleAddToCartEvent);
+
     return () => {
-      window.removeEventListener('add-to-cart', handleAddToCartEvent);
+      window.removeEventListener("add-to-cart", handleAddToCartEvent);
     };
   }, []);
 
   const handleAddToCartEvent = (event) => {
     const { product, count } = event.detail;
     addToCart(product, count);
-  }
+  };
 
   const addToCart = (product, count) => {
-    setCartItems(prevItems => {
-      const existingItemIndex = prevItems.findIndex(item => item.product.id === product.id);
-      
+    setCartItems((prevItems) => {
+      const existingItemIndex = prevItems.findIndex(
+        (item) => item.product.id === product.id
+      );
+
       if (existingItemIndex >= 0) {
         const updatedCartItems = [...prevItems];
         updatedCartItems[existingItemIndex] = {
           product,
-          count: prevItems[existingItemIndex].count + count
+          count: prevItems[existingItemIndex].count + count,
         };
         return updatedCartItems;
       } else {
         return [...prevItems, { product, count }];
       }
     });
-  }
+  };
 
   const getCartItemsCount = () => {
     return cartItems.reduce((total, item) => total + item.count, 0);
-  }
+  };
 
   const getCartTotal = () => {
-    return cartItems.reduce((total, item) => total + (item.product.price * item.count), 0);
-  }
-
-  const fetchOrdersData = async () => {
-    try {
-      const { url, options } = getOrdersApi();
-      const ordersData = await fetchData(url, options);
-      setOrders(ordersData);
-    } catch (error) {
-      console.error('Ошибка при загрузке заказов:', error);
-    }
-  }
+    return cartItems.reduce(
+      (total, item) => total + item.product.price * item.count,
+      0
+    );
+  };
 
   return {
     cartItems,
     orders,
     getCartItemsCount,
-    getCartTotal
+    getCartTotal,
   };
-} 
+};

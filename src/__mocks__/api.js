@@ -1,45 +1,51 @@
-import { useFetch, logApiCall } from '../hooks';
-
+import { useFetch } from "../hooks";
 
 // Функция для получения блюд
 export const getMealsApi = () => {
-  const url = 'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals';
-  return { url, options: { method: 'GET' } };
+  const url = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals";
+  return { url, options: { method: "GET" } };
 };
 
 // Функция для сохранения заказа
 export const saveOrderApi = (mealId, count) => {
-  const url = 'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/orders';
+  const url = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/orders";
   return {
     url,
     options: {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ mealId, count, date: new Date().toISOString() })
-    }
+      body: JSON.stringify({ mealId, count, date: new Date().toISOString() }),
+    },
   };
 };
 
 // Функция для получения заказов
 export const getOrdersApi = () => {
-  const url = 'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/orders';
-  return { url, options: { method: 'GET' } };
+  const url = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/orders";
+  return { url, options: { method: "GET" } };
 };
 
-// Для обратной совместимости оставляем старые функции, но теперь они будут логгировать данные
 export const fetchMeals = async () => {
   try {
     const response = await fetch(getMealsApi().url, getMealsApi().options);
     if (!response.ok) {
-      throw new Error('Ошибка при получении данных');
+      throw new Error("Ошибка при получении данных");
     }
     const data = await response.json();
-    
-    // Используем выделенную функцию логирования
-    logApiCall(getMealsApi().url, getMealsApi().options, response.status, data);
-    
+
+    const log = {
+      url: getMealsApi().url,
+      method: "GET",
+      payload: null,
+      status: response.status,
+      timestamp: new Date().toISOString(),
+    };
+
+    const prevLogs = JSON.parse(localStorage.getItem("fetchLogs")) || [];
+    localStorage.setItem("fetchLogs", JSON.stringify([...prevLogs, log]));
+
     return data;
   } catch (error) {
     throw error;
@@ -55,16 +61,25 @@ export const saveOrder = async (mealId, count) => {
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
-      throw new Error('Ошибка при получении заказов');
+      throw new Error("Ошибка при получении заказов");
     }
-    
-    // Используем выделенную функцию логирования
+
     const data = await response.json();
-    logApiCall(url, options, response.status, data);
-    
+
+    const log = {
+      url,
+      method: options.method || "GET",
+      payload: options.body ? JSON.parse(options.body) : null,
+      status: response.status,
+      timestamp: new Date().toISOString(),
+    };
+
+    const prevLogs = JSON.parse(localStorage.getItem("fetchLogs")) || [];
+    localStorage.setItem("fetchLogs", JSON.stringify([...prevLogs, log]));
+
     return true;
   } catch (error) {
-    console.error('Ошибка при сохранении заказа:', error);
+    console.error("Ошибка при сохранении заказа:", error);
     throw error;
   }
 };
@@ -74,16 +89,24 @@ export const fetchOrders = async () => {
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
-      throw new Error('Ошибка при получении заказов');
+      throw new Error("Ошибка при получении заказов");
     }
     const data = await response.json();
-    
-    // Используем выделенную функцию логирования
-    logApiCall(url, options, response.status, data);
-    
+
+    const log = {
+      url,
+      method: options.method || "GET",
+      payload: null,
+      status: response.status,
+      timestamp: new Date().toISOString(),
+    };
+
+    const prevLogs = JSON.parse(localStorage.getItem("fetchLogs")) || [];
+    localStorage.setItem("fetchLogs", JSON.stringify([...prevLogs, log]));
+
     return data;
   } catch (error) {
-    console.error('Ошибка при загрузке заказов:', error);
+    console.error("Ошибка при загрузке заказов:", error);
     throw error;
   }
-}; 
+};
