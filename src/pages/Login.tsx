@@ -2,7 +2,7 @@ import React from 'react'
 import LoginForm from '../components/LoginForm/LoginForm'
 import BackgroundWrapper from '../components/BackgroundWrapperMenu/BackgroundWrapperMenu'
 
-const Login = () => {
+const Login: React.FC = () => {
   return (
     <BackgroundWrapper>
       <div className="login-page">

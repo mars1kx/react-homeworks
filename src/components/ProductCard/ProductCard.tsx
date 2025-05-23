@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import './ProductCard.css';
 
-const ProductCard = ({ product, onAddToCart }) => {
-  const [itemCount, setItemCount] = useState(1);
+interface Product {
+  id: string;
+  meal: string;
+  price: number;
+  img: string;
+  description?: string;
+  instructions?: string;
+  category: string;
+}
 
-  const handleCountChange = (value) => {
+interface ProductCardProps {
+  product: Product;
+  onAddToCart: (id: string, count: number, product: Product) => void;
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
+  const [itemCount, setItemCount] = useState<number>(1);
+
+  const handleCountChange = (value: number): void => {
     setItemCount(value < 1 ? 1 : value);
   }
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (): void => {
     if (onAddToCart) {
       onAddToCart(product.id, itemCount, product);
     }
@@ -25,7 +40,7 @@ const ProductCard = ({ product, onAddToCart }) => {
           <p className="product-price">$ {product.price.toFixed(2)} USD</p>
         </div>
         <p className="product-description">
-          {product.description || product.instructions.substring(0, 100) + '...'}
+          {product.description || (product.instructions && product.instructions.substring(0, 100) + '...')}
         </p>
         <div className="product-actions">
           <div className="quantity-control">
@@ -33,7 +48,7 @@ const ProductCard = ({ product, onAddToCart }) => {
               type="number" 
               min="1" 
               value={itemCount} 
-              onChange={(e) => handleCountChange(parseInt(e.target.value) || 1)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleCountChange(parseInt(e.target.value) || 1)}
               className="quantity-input"
             />
           </div>
