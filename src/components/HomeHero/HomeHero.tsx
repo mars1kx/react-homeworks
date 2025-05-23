@@ -100,7 +100,7 @@ const HeroImage = styled.div`
   }
 `;
 
-const HomeHero = () => {
+const HomeHero: React.FC = () => {
   return (
     <HeroContainer>
       <HeroContent>
@@ -130,4 +130,4 @@ const HomeHero = () => {
   );
 };
 
-export default HomeHero;
+export default HomeHero; 

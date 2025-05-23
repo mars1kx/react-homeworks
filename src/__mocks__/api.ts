@@ -1,13 +1,45 @@
 import { useFetch } from "../hooks";
 
-// Функция для получения блюд
-export const getMealsApi = () => {
+interface ApiResponse {
+  url: string;
+  options: {
+    method: string;
+    headers?: Record<string, string>;
+    body?: string;
+  };
+}
+
+interface Order {
+  mealId: string;
+  count: number;
+  date: string;
+  id?: string;
+}
+
+interface LogEntry {
+  url: string;
+  method: string;
+  payload: any | null;
+  status: number;
+  timestamp: string;
+}
+
+interface Meal {
+  id: string;
+  meal: string;
+  price: number;
+  img: string;
+  description?: string;
+  instructions?: string;
+  category: string;
+}
+
+export const getMealsApi = (): ApiResponse => {
   const url = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals";
   return { url, options: { method: "GET" } };
 };
 
-// Функция для сохранения заказа
-export const saveOrderApi = (mealId, count) => {
+export const saveOrderApi = (mealId: string, count: number): ApiResponse => {
   const url = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/orders";
   return {
     url,
@@ -21,21 +53,20 @@ export const saveOrderApi = (mealId, count) => {
   };
 };
 
-// Функция для получения заказов
-export const getOrdersApi = () => {
+export const getOrdersApi = (): ApiResponse => {
   const url = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/orders";
   return { url, options: { method: "GET" } };
 };
 
-export const fetchMeals = async () => {
+export const fetchMeals = async (): Promise<Meal[]> => {
   try {
     const response = await fetch(getMealsApi().url, getMealsApi().options);
     if (!response.ok) {
       throw new Error("Ошибка при получении данных");
     }
-    const data = await response.json();
+    const data: Meal[] = await response.json();
 
-    const log = {
+    const log: LogEntry = {
       url: getMealsApi().url,
       method: "GET",
       payload: null,
@@ -43,7 +74,7 @@ export const fetchMeals = async () => {
       timestamp: new Date().toISOString(),
     };
 
-    const prevLogs = JSON.parse(localStorage.getItem("fetchLogs")) || [];
+    const prevLogs: LogEntry[] = JSON.parse(localStorage.getItem("fetchLogs") || "[]");
     localStorage.setItem("fetchLogs", JSON.stringify([...prevLogs, log]));
 
     return data;
@@ -53,10 +84,11 @@ export const fetchMeals = async () => {
 };
 
 /**
- * @param {number} mealId - ID блюда
+ * Сохранение заказа
+ * @param {string} mealId - ID блюда
  * @param {number} count - Количество
  */
-export const saveOrder = async (mealId, count) => {
+export const saveOrder = async (mealId: string, count: number): Promise<boolean> => {
   const { url, options } = saveOrderApi(mealId, count);
   try {
     const response = await fetch(url, options);
@@ -64,9 +96,9 @@ export const saveOrder = async (mealId, count) => {
       throw new Error("Ошибка при получении заказов");
     }
 
-    const data = await response.json();
+    const data: Order = await response.json();
 
-    const log = {
+    const log: LogEntry = {
       url,
       method: options.method || "GET",
       payload: options.body ? JSON.parse(options.body) : null,
@@ -74,7 +106,7 @@ export const saveOrder = async (mealId, count) => {
       timestamp: new Date().toISOString(),
     };
 
-    const prevLogs = JSON.parse(localStorage.getItem("fetchLogs")) || [];
+    const prevLogs: LogEntry[] = JSON.parse(localStorage.getItem("fetchLogs") || "[]");
     localStorage.setItem("fetchLogs", JSON.stringify([...prevLogs, log]));
 
     return true;
@@ -84,16 +116,16 @@ export const saveOrder = async (mealId, count) => {
   }
 };
 
-export const fetchOrders = async () => {
+export const fetchOrders = async (): Promise<Order[]> => {
   const { url, options } = getOrdersApi();
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
       throw new Error("Ошибка при получении заказов");
     }
-    const data = await response.json();
+    const data: Order[] = await response.json();
 
-    const log = {
+    const log: LogEntry = {
       url,
       method: options.method || "GET",
       payload: null,
@@ -101,7 +133,7 @@ export const fetchOrders = async () => {
       timestamp: new Date().toISOString(),
     };
 
-    const prevLogs = JSON.parse(localStorage.getItem("fetchLogs")) || [];
+    const prevLogs: LogEntry[] = JSON.parse(localStorage.getItem("fetchLogs") || "[]");
     localStorage.setItem("fetchLogs", JSON.stringify([...prevLogs, log]));
 
     return data;
@@ -109,4 +141,4 @@ export const fetchOrders = async () => {
     console.error("Ошибка при загрузке заказов:", error);
     throw error;
   }
-};
+}; 

@@ -5,7 +5,28 @@ import InstagramIcon from '../../assets/social-instagram.svg'
 import TwitterIcon from '../../assets/social-twitter.svg'
 import YoutubeIcon from '../../assets/social-youtube.svg'
 
-const footerConfig = {
+interface FooterLink {
+  title: string;
+  url: string;
+}
+
+interface FooterColumn {
+  title: string;
+  links: FooterLink[];
+}
+
+interface SocialLink {
+  icon: string;
+  url: string;
+  alt: string;
+}
+
+interface FooterConfig {
+  columns: FooterColumn[];
+  socialLinks: SocialLink[];
+}
+
+const footerConfig: FooterConfig = {
   columns: [
     {
       title: 'COMPANY',
@@ -39,7 +60,7 @@ const footerConfig = {
   ]
 };
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
     <div className="footer-wrapper">
       <footer className="footer">
@@ -84,4 +105,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default Footer 

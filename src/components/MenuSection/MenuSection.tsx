@@ -6,30 +6,53 @@ import Tooltip from "../Tooltip/Tooltip";
 import { saveOrderApi } from "../../__mocks__/api";
 import { useFetch } from "../../hooks";
 
-const MenuSection = ({ products }) => {
-  const [visibleItemsCount, setVisibleItemsCount] = useState(6);
-  const [categoryFilter, setCategoryFilter] = useState(null);
-  const [currentOrderInfo, setCurrentOrderInfo] = useState(null);
+interface Product {
+  id: string;
+  meal: string;
+  price: number;
+  img: string;
+  description?: string;
+  instructions?: string;
+  category: string;
+}
+
+interface OrderInfo {
+  url: string;
+  options: {
+    method: string;
+    headers: Record<string, string>;
+    body: string;
+  };
+}
+
+interface MenuSectionProps {
+  products: Product[];
+}
+
+const MenuSection: React.FC<MenuSectionProps> = ({ products }) => {
+  const [visibleItemsCount, setVisibleItemsCount] = useState<number>(6);
+  const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [currentOrderInfo, setCurrentOrderInfo] = useState<OrderInfo | null>(null);
 
   const { data, status } = useFetch(
-    currentOrderInfo ? currentOrderInfo.url : null,
-    currentOrderInfo ? currentOrderInfo.options : null
+    currentOrderInfo?.url || "",
+    currentOrderInfo?.options || {}
   );
 
   useEffect(() => {
     if (status === 200 && data) {
-      console.log("Заказ успешно сохранен:", data);
+      console.log("Order saved successfully:", data);
     }
   }, [data, status]);
 
-  const handleCategoryChange = (category) => {
+  const handleCategoryChange = (category: string): void => {
     setCategoryFilter((prevCategory) =>
       prevCategory === category ? null : category
     );
   };
 
-  const handleAddToCart = (id, count, product) => {
-    console.log(`Добавлен товар #${id} в корзину в количестве ${count} штук`);
+  const handleAddToCart = (id: string, count: number, product: Product): void => {
+    console.log(`Product #${id} added to cart in quantity ${count}`);
 
     handleSaveOrder(id, count);
 
@@ -44,12 +67,19 @@ const MenuSection = ({ products }) => {
     }
   };
 
-  const handleSaveOrder = async (mealId, count) => {
+  const handleSaveOrder = async (mealId: string, count: number): Promise<void> => {
     const { url, options } = saveOrderApi(mealId, count);
-    setCurrentOrderInfo({ url, options });
+    setCurrentOrderInfo({ 
+      url, 
+      options: {
+        method: options.method,
+        headers: options.headers || {},
+        body: options.body || ""
+      } 
+    });
   };
 
-  const handleLoadMore = () => {
+  const handleLoadMore = (): void => {
     setVisibleItemsCount((prevCount) => prevCount + 6);
   };
 
@@ -89,4 +119,4 @@ const MenuSection = ({ products }) => {
   );
 };
 
-export default MenuSection;
+export default MenuSection; 

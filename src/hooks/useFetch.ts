@@ -1,9 +1,33 @@
 import { useState, useEffect } from "react";
 
-// Выделяю функцию логирования, чтобы её можно было использовать вне хука
-export const logApiCall = (url, options = {}, status, responseBody) => {
+interface LogEntry {
+  url: string;
+  method: string;
+  requestBody: any | null;
+  status: number | string;
+  timestamp: string;
+  response?: any;
+  error?: string;
+}
+
+interface FetchOptions extends RequestInit {
+  body?: string;
+}
+
+interface FetchResult<T> {
+  data: T | null;
+  status: number | string | null;
+  error: Error | null;
+}
+
+export const logApiCall = (
+  url: string, 
+  options: FetchOptions = {}, 
+  status: number | string, 
+  responseBody: any
+): void => {
   try {
-    const logEntry = {
+    const logEntry: LogEntry = {
       url,
       method: options.method || "GET",
       requestBody: options.body ? JSON.parse(options.body) : null,
@@ -19,10 +43,10 @@ export const logApiCall = (url, options = {}, status, responseBody) => {
   }
 };
 
-export const useFetch = (url, options = {}) => {
-  const [data, setData] = useState(null);
-  const [status, setStatus] = useState(null);
-  const [error, setError] = useState(null);
+export const useFetch = <T>(url: string, options: FetchOptions = {}): FetchResult<T> => {
+  const [data, setData] = useState<T | null>(null);
+  const [status, setStatus] = useState<number | string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     if (!url) return;
@@ -39,30 +63,31 @@ export const useFetch = (url, options = {}) => {
         setData(responseData);
         setStatus(response.status);
 
-        const log = {
+        const log: LogEntry = {
           url,
           method: options.method || "GET",
-          payload: options.body ? JSON.parse(options.body) : null,
+          requestBody: options.body ? JSON.parse(options.body) : null,
           status: response.status,
           timestamp: new Date().toISOString(),
         };
 
-        const prevLogs = JSON.parse(localStorage.getItem("fetchLogs")) || [];
+        const prevLogs = JSON.parse(localStorage.getItem("fetchLogs") || "[]");
         localStorage.setItem("fetchLogs", JSON.stringify([...prevLogs, log]));
       } catch (err) {
-        setError(err);
+        const error = err as Error;
+        setError(error);
         setStatus("error");
 
-        const errorLog = {
+        const errorLog: LogEntry = {
           url,
           method: options.method || "GET",
-          payload: options.body ? JSON.parse(options.body) : null,
+          requestBody: options.body ? JSON.parse(options.body) : null,
           status: "error",
-          error: err.message,
+          error: error.message,
           timestamp: new Date().toISOString(),
         };
 
-        const prevLogs = JSON.parse(localStorage.getItem("fetchLogs")) || [];
+        const prevLogs = JSON.parse(localStorage.getItem("fetchLogs") || "[]");
         localStorage.setItem(
           "fetchLogs",
           JSON.stringify([...prevLogs, errorLog])
@@ -74,4 +99,4 @@ export const useFetch = (url, options = {}) => {
   }, [url, JSON.stringify(options)]);
 
   return { data, status, error };
-};
+}; 
