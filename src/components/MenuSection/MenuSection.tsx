@@ -4,7 +4,6 @@ import CategoryFilter from "../CategoryFilter/CategoryFilter";
 import ProductList from "../ProductList/ProductList";
 import Tooltip from "../Tooltip/Tooltip";
 import { saveOrderApi } from "../../__mocks__/api";
-import { useFetch } from "../../hooks";
 
 interface Product {
   id: string;
@@ -33,17 +32,31 @@ const MenuSection: React.FC<MenuSectionProps> = ({ products }) => {
   const [visibleItemsCount, setVisibleItemsCount] = useState<number>(6);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [currentOrderInfo, setCurrentOrderInfo] = useState<OrderInfo | null>(null);
-
-  const { data, status } = useFetch(
-    currentOrderInfo?.url || "",
-    currentOrderInfo?.options || {}
-  );
+  const [orderStatus, setOrderStatus] = useState<number | null>(null);
+  const [orderData, setOrderData] = useState<any>(null);
 
   useEffect(() => {
-    if (status === 200 && data) {
-      console.log("Order saved successfully:", data);
+    const fetchOrder = async () => {
+      if (!currentOrderInfo) return;
+      
+      try {
+        const response = await fetch(currentOrderInfo.url, currentOrderInfo.options);
+        const data = await response.json();
+        setOrderStatus(response.status);
+        setOrderData(data);
+        
+        if (response.ok) {
+          console.log("Order saved successfully:", data);
+        }
+      } catch (error) {
+        console.error("Error saving order:", error);
+      }
+    };
+    
+    if (currentOrderInfo) {
+      fetchOrder();
     }
-  }, [data, status]);
+  }, [currentOrderInfo]);
 
   const handleCategoryChange = (category: string): void => {
     setCategoryFilter((prevCategory) =>

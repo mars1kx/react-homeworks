@@ -12,13 +12,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.21",
     "D": "^1.0.0",
     "firebase": "^11.7.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.3",
+    "redux": "^5.0.1",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {

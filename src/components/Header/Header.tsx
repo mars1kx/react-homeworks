@@ -4,12 +4,14 @@ import './Header.css'
 import logoSvg from '../../assets/Logo.svg'
 import cartSvg from '../../assets/Cart.svg'
 import { useCart } from '../../hooks'
-import { useAuth } from '../../contexts/AuthContext'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { logoutUser } from '../../store/slices/authSlice'
 import logger from '../../utils/logger'
 
 const Header: React.FC = () => {
   const { getCartItemsCount, getCartTotal } = useCart();
-  const { currentUser, logout } = useAuth();
+  const { currentUser } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   
   const cartCount = getCartItemsCount();
@@ -17,13 +19,7 @@ const Header: React.FC = () => {
 
   const handleLogout = async (): Promise<void> => {
     logger.info('Logout button clicked')
-    try {
-      await logout();
-      logger.info('Logout successful, navigating to home page')
-      navigate('/');
-    } catch (error) {
-      logger.error('Logout error in Header component', error as Error)
-    }
+    dispatch(logoutUser());
   };
 
   return (
