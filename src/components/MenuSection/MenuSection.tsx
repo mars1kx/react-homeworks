@@ -4,16 +4,7 @@ import CategoryFilter from "../CategoryFilter/CategoryFilter";
 import ProductList from "../ProductList/ProductList";
 import Tooltip from "../Tooltip/Tooltip";
 import { saveOrderApi } from "../../__mocks__/api";
-
-interface Product {
-  id: string;
-  meal: string;
-  price: number;
-  img: string;
-  description?: string;
-  instructions?: string;
-  category: string;
-}
+import { Meal } from "../../store/types";
 
 interface OrderInfo {
   url: string;
@@ -25,7 +16,7 @@ interface OrderInfo {
 }
 
 interface MenuSectionProps {
-  products: Product[];
+  products: Meal[];
 }
 
 const MenuSection: React.FC<MenuSectionProps> = ({ products }) => {
@@ -64,7 +55,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ products }) => {
     );
   };
 
-  const handleAddToCart = (id: string, count: number, product: Product): void => {
+  const handleAddToCart = (id: string, count: number, product: Meal): void => {
     console.log(`Product #${id} added to cart in quantity ${count}`);
 
     handleSaveOrder(id, count);
