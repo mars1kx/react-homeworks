@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import './Tooltip.css';
 
-const Tooltip = ({ children, text }) => {
-  const [isVisible, setIsVisible] = useState(false);
+interface TooltipProps {
+  children: ReactNode;
+  text: string;
+}
 
-  const handleMouseEnter = () => {
+const Tooltip: React.FC<TooltipProps> = ({ children, text }) => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const handleMouseEnter = (): void => {
     setIsVisible(true);
   }
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (): void => {
     setIsVisible(false);
   }
 
