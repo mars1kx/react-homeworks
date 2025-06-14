@@ -6,6 +6,8 @@ import Footer from './components/Footer/Footer'
 import Home from './pages/Home'
 import Menu from './pages/Menu'
 import Login from './pages/Login'
+import Order from './pages/Order'
+import ProtectedRoute from './components/ProtectedRoute'
 import { useAppDispatch } from './store/hooks'
 import { checkAuthState } from './store/slices/authSlice'
 
@@ -25,6 +27,11 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/order" element={
+            <ProtectedRoute>
+              <Order />
+            </ProtectedRoute>
+          } />
         </Routes>
         
         <Footer />

@@ -1,20 +1,11 @@
 import React from 'react';
 import './ProductList.css';
 import ProductCard from '../ProductCard/ProductCard';
-
-interface Product {
-  id: string;
-  meal: string;
-  price: number;
-  img: string;
-  description?: string;
-  instructions?: string;
-  category: string;
-}
+import { Meal } from '../../store/types';
 
 interface ProductListProps {
-  products: Product[];
-  onAddToCart: (id: string, count: number, product: Product) => void;
+  products: Meal[];
+  onAddToCart: (id: string, count: number, product: Meal) => void;
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products, onAddToCart }) => {

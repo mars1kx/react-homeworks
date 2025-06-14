@@ -1,38 +1,5 @@
 import { useFetch } from "../hooks";
-
-interface ApiResponse {
-  url: string;
-  options: {
-    method: string;
-    headers?: Record<string, string>;
-    body?: string;
-  };
-}
-
-interface Order {
-  mealId: string;
-  count: number;
-  date: string;
-  id?: string;
-}
-
-interface LogEntry {
-  url: string;
-  method: string;
-  payload: any | null;
-  status: number;
-  timestamp: string;
-}
-
-interface Meal {
-  id: string;
-  meal: string;
-  price: number;
-  img: string;
-  description?: string;
-  instructions?: string;
-  category: string;
-}
+import { ApiResponse, Order, LogEntry, Meal } from "../store/types";
 
 export const getMealsApi = (): ApiResponse => {
   const url = "https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals";

@@ -1,21 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Header.css'
 import logoSvg from '../../assets/Logo.svg'
 import cartSvg from '../../assets/Cart.svg'
-import { useCart } from '../../hooks'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { logoutUser } from '../../store/slices/authSlice'
+import { selectCartItemsCount } from '../../store/slices/cartSlice'
 import logger from '../../utils/logger'
 
 const Header: React.FC = () => {
-  const { getCartItemsCount, getCartTotal } = useCart();
+  const cartCount = useAppSelector(selectCartItemsCount);
   const { currentUser } = useAppSelector(state => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  
-  const cartCount = getCartItemsCount();
-  const cartTotal = getCartTotal().toFixed(2);
 
   const handleLogout = async (): Promise<void> => {
     logger.info('Logout button clicked')
@@ -48,12 +45,9 @@ const Header: React.FC = () => {
           </nav>
           
           <div className="cart-container">
-            <button className="cart-button">
+            <button className="cart-button" onClick={() => navigate('/order')}>
               <img src={cartSvg} alt="Cart" className="cart-icon" />
               <div className="cart-badge">{cartCount}</div>
-              {cartCount > 0 && (
-                <div className="cart-total">$ {cartTotal} USD</div>
-              )}
             </button>
           </div>
         </div>

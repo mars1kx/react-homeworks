@@ -5,16 +5,6 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchMeals } from "../store/slices/mealsSlice";
 import { MealsState } from "../store/types";
 
-interface Product {
-  id: string;
-  meal: string;
-  price: number;
-  img: string;
-  description?: string;
-  instructions?: string;
-  category: string;
-}
-
 const Menu: React.FC = () => {
   const dispatch = useAppDispatch();
   const { meals, loading, error } = useAppSelector(state => state.meals) as MealsState;

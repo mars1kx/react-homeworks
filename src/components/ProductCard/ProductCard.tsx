@@ -1,19 +1,10 @@
 import React, { useState, ChangeEvent } from 'react';
 import './ProductCard.css';
-
-interface Product {
-  id: string;
-  meal: string;
-  price: number;
-  img: string;
-  description?: string;
-  instructions?: string;
-  category: string;
-}
+import { Meal } from '../../store/types';
 
 interface ProductCardProps {
-  product: Product;
-  onAddToCart: (id: string, count: number, product: Product) => void;
+  product: Meal;
+  onAddToCart: (id: string, count: number, product: Meal) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
