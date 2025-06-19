@@ -1,18 +1,9 @@
 import React, { useEffect } from "react";
 import MenuSection from "../components/MenuSection/MenuSection";
 import BackgroundWrapper from "../components/BackgroundWrapperMenu/BackgroundWrapperMenu";
-import { getMealsApi } from "../__mocks__/api";
-import { useFetch } from "../hooks";
-
-interface Meal {
-  id: string;
-  meal: string;
-  price: number;
-  img: string;
-  description?: string;
-  instructions?: string;
-  category: string;
-}
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { fetchMeals } from "../store/slices/mealsSlice";
+import { MealsState } from "../store/types";
 
 interface Product {
   id: string;
@@ -24,21 +15,20 @@ interface Product {
   category: string;
 }
 
-
 const Menu: React.FC = () => {
-  const { url } = getMealsApi();
-  const { data: mealsData, status, error } = useFetch<Meal[]>(url);
+  const dispatch = useAppDispatch();
+  const { meals, loading, error } = useAppSelector(state => state.meals) as MealsState;
 
-  const isLoading = !mealsData && !error;
+  useEffect(() => {
+    dispatch(fetchMeals());
+  }, [dispatch]);
+
+  const isLoading = loading;
   const isError = !!error;
 
-
   const fetchMealsData = (): void => {
-    window.location.reload();
+    dispatch(fetchMeals());
   };
-
-  const meals: Product[] = mealsData || [];
-
 
   return (
     <BackgroundWrapper>
@@ -46,7 +36,7 @@ const Menu: React.FC = () => {
         {isLoading && <div className="loading">Data loading</div>}
         {isError && (
           <div className="error">
-            <div>Error: {(error as Error).message}</div>
+            <div>Error: {error}</div>
             <button onClick={fetchMealsData}>Try again</button>
           </div>
         )}

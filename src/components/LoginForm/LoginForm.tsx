@@ -1,34 +1,35 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react'
+import React, { useState, FormEvent, ChangeEvent, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../contexts/AuthContext'
 import logger from '../../utils/logger'
 import './LoginForm.css'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { loginUser, clearError } from '../../store/slices/authSlice'
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const { login } = useAuth()
   const navigate = useNavigate()
+  
+  const dispatch = useAppDispatch()
+  const { loading, error, currentUser } = useAppSelector(state => state.auth)
+
+  useEffect(() => {
+    if (currentUser) {
+      logger.info('Login form navigation to home page')
+      navigate('/')
+    }
+    
+    return () => {
+      dispatch(clearError())
+    }
+  }, [currentUser, navigate, dispatch])
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault()
     
     logger.info('Login form submitted', { email })
     
-    try {
-      setError('')
-      setLoading(true)
-      await login(email, password)
-      logger.info('Login form navigation to home page')
-      navigate('/')
-    } catch (err) {
-      logger.error('Login form error', err as Error)
-      setError('Failed to sign in')
-    }
-    
-    setLoading(false)
+    dispatch(loginUser({ email, password }))
   }
 
   return (

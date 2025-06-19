@@ -1,20 +1,11 @@
 import React from 'react';
 import './CategoryFilter.css';
-
-interface Product {
-  id: string;
-  category: string;
-  meal: string;
-  price: number;
-  img: string;
-  description?: string;
-  instructions?: string;
-}
+import { Meal } from '../../store/types';
 
 interface CategoryFilterProps {
   activeCategory: string | null;
   onCategoryChange: (category: string) => void;
-  products: Product[];
+  products: Meal[];
   disabled: boolean;
 }
 

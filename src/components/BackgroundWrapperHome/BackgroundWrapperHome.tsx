@@ -1,11 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, PropsWithChildren } from 'react';
 import './BackgroundWrapperHome.css';
 
-interface BackgroundWrapperProps {
-  children: ReactNode;
-}
-
-const BackgroundWrapper: React.FC<BackgroundWrapperProps> = ({ children }) => {
+const BackgroundWrapper: React.FC<PropsWithChildren> = ({ children }) => {
   return <div className="background-wrapper-home">{children}</div>;
 };
 
