@@ -10,6 +10,7 @@ import Order from './pages/Order'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAppDispatch } from './store/hooks'
 import { checkAuthState } from './store/slices/authSlice'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -19,24 +20,26 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <Router>
-      <div className="app">
-        <Header />
-        
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/order" element={
-            <ProtectedRoute>
-              <Order />
-            </ProtectedRoute>
-          } />
-        </Routes>
-        
-        <Footer />
-      </div>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <div className="app">
+          <Header />
+          
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/order" element={
+              <ProtectedRoute>
+                <Order />
+              </ProtectedRoute>
+            } />
+          </Routes>
+          
+          <Footer />
+        </div>
+      </Router>
+    </ThemeProvider>
   )
 }
 

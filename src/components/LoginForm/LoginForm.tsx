@@ -4,11 +4,13 @@ import logger from '../../utils/logger'
 import './LoginForm.css'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { loginUser, clearError } from '../../store/slices/authSlice'
+import { useTheme } from '../../contexts/ThemeContext'
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const { theme } = useTheme()
   
   const dispatch = useAppDispatch()
   const { loading, error, currentUser } = useAppSelector(state => state.auth)
@@ -33,10 +35,10 @@ const LoginForm: React.FC = () => {
   }
 
   return (
-    <div className="login-form-wrapper">
+    <div className={`login-form-wrapper ${theme}`}>
       <h2 className="login-title">Log in</h2>
       
-      <div className="login-form-container">
+      <div className={`login-form-container ${theme}`}>
         <form className="login-form" onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
           

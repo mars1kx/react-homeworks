@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import trustpilotLogo from "../../assets/trustpilot-logo.png";
 import Rating from "../Rating/Rating";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const HeroContainer = styled.div`
   display: flex;
@@ -29,14 +30,19 @@ const HeroContent = styled.div`
   }
 `;
 
-const HeroTitle = styled.h1`
+interface HeroTitleProps {
+  isDarkTheme: boolean;
+}
+
+const HeroTitle = styled.h1<HeroTitleProps>`
   font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 60px;
   line-height: 60px;
   letter-spacing: 1.8px;
-  color: #000;
+  color: ${props => props.isDarkTheme ? '#ffffff' : '#000'};
   margin-bottom: 1.5rem;
+  transition: color 0.3s ease;
 
   @media (max-width: 992px) {
     font-size: 40px;
@@ -48,14 +54,15 @@ const Highlighted = styled.span`
   color: #35b8be;
 `;
 
-const HeroDescription = styled.p`
+const HeroDescription = styled.p<HeroTitleProps>`
   font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 19px;
   line-height: 24.12px;
   letter-spacing: 0.36px;
-  color: #5a5a77;
+  color: ${props => props.isDarkTheme ? '#b0b0b0' : '#5a5a77'};
   margin-bottom: 2rem;
+  transition: color 0.3s ease;
 `;
 
 const HeroCta = styled.div`
@@ -101,14 +108,17 @@ const HeroImage = styled.div`
 `;
 
 const HomeHero: React.FC = () => {
+  const { theme } = useTheme();
+  const isDarkTheme = theme === 'dark';
+  
   return (
     <HeroContainer>
       <HeroContent>
-        <HeroTitle>
+        <HeroTitle isDarkTheme={isDarkTheme}>
           Beautiful food & takeaway, <Highlighted>delivered</Highlighted> to
           your door.
         </HeroTitle>
-        <HeroDescription>
+        <HeroDescription isDarkTheme={isDarkTheme}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500.

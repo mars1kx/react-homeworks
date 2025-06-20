@@ -1,11 +1,12 @@
 .header {
 	width: 100vw;
-	background-color: #ffffff;
+	background-color: var(--header-background);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: relative;
 	z-index: 2;
+	transition: background-color 0.3s ease;
 }
 
 .header-content {
@@ -46,7 +47,7 @@
 }
 
 .nav-menu a {
-	color: rgba(40, 34, 75, 1);
+	color: var(--text-color);
 	font-size: 15px;
 	transition: color 0.3s;
 }
@@ -58,6 +59,8 @@
 .cart-container {
 	display: flex;
 	position: relative;
+	align-items: center;
+	gap: 15px;
 }
 
 .cart-button {
@@ -98,6 +101,12 @@
 	box-shadow: 7px 7px 25px 0 rgba(126, 130, 143, 0.27);
 	top: -8px;
 	right: -8px;
+	transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark .cart-badge {
+	background-color: #1e1e1e;
+	box-shadow: 7px 7px 25px 0 rgba(0, 0, 0, 0.3);
 }
 
 .cart-total {
@@ -117,7 +126,7 @@
 .logout-button {
 	background: none;
 	border: none;
-	color: var(--main-text-color);
+	color: var(--text-color);
 	cursor: pointer;
 	font-size: 16px;
 	font-weight: 500;
@@ -131,7 +140,37 @@
 	color: var(--primary-color);
 }
 
-/* Адаптивные стили */
+.theme-toggle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 8px;
+	border-radius: 50%;
+	transition: background-color 0.3s;
+	color: var(--text-color);
+}
+
+.theme-toggle:hover {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+body.dark .theme-toggle:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-toggle img {
+	width: 20px;
+	height: 20px;
+	filter: invert(var(--is-dark-theme, 0));
+}
+
+body.dark .theme-toggle img {
+	--is-dark-theme: 1;
+}
+
 @media screen and (max-width: 1200px) {
 	.header-content {
 		padding: 20px 80px;
@@ -186,6 +225,11 @@
 		top: -6px;
 		right: -6px;
 	}
+
+	.theme-toggle img {
+		width: 18px;
+		height: 18px;
+	}
 }
 
 @media screen and (max-width: 576px) {
@@ -222,5 +266,10 @@
 		top: -5px;
 		right: -5px;
 		box-shadow: 5px 5px 15px 0 rgba(126, 130, 143, 0.2);
+	}
+
+	.theme-toggle img {
+		width: 16px;
+		height: 16px;
 	}
 }
