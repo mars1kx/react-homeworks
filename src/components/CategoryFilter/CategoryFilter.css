@@ -7,19 +7,23 @@
 
 .category-button {
   padding: 16px 46px;
-  border: 1px solid rgba(97, 114, 131, 0.20);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   font-size: 15px;
   cursor: pointer;
   transition: all 0.3s;
-  color: #333;
-  background-color: rgba(245, 251, 252, 1);
+  color: var(--text-color);
+  background-color: var(--card-background);
 }
 
 .category-button.active {
-  background-color: #35B8BE; 
-  color: white;
+  background-color: var(--button-primary);
+  color: var(--button-text);
   border: none;
+}
+
+.category-button:hover:not(.active) {
+  background-color: var(--section-background);
 }
 
 .category-button.disabled {

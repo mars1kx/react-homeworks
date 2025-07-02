@@ -16,10 +16,11 @@
 
 .login-form-container {
   width: 100%;
-  background-color: white;
+  background-color: var(--card-background);
   border-radius: 8px;
   padding: 30px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px var(--shadow-color);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .login-form {
@@ -38,17 +39,26 @@
   margin-right: 10px;
   min-width: 85px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-color);
   text-align: left;
+  transition: color 0.3s ease;
+  width: 85px;
 }
 
 .form-input {
   flex: 1;
   padding: 12px 16px;
-  border: none;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 16px;
-  background-color: #f5f5f5;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark .form-input {
+  background-color: #2d2d2d;
+  color: #ffffff;
 }
 
 .form-input:focus {
@@ -64,8 +74,8 @@
 }
 
 .submit-button {
-  background-color: #35b8be;
-  color: white;
+  background-color: var(--button-primary);
+  color: var(--button-text);
   border: none;
   padding: 12px 24px;
   border-radius: 4px;
@@ -80,19 +90,19 @@
 }
 
 .cancel-button {
-  background-color: white;
-  color: #333;
-  border: 1px solid #ddd;
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
   padding: 12px 24px;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
   width: 120px;
 }
 
 .cancel-button:hover {
-  background-color: #f1f1f1;
+  background-color: var(--section-background);
 }
 
 .error-message {

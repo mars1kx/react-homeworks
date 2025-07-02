@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { removeFromCart, selectCartItems, selectCartTotal } from "../../store/slices/cartSlice";
 import "./OrderSection.css";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const OrderSection: React.FC = () => {
   const cartItems = useAppSelector(selectCartItems);
   const totalPrice = useAppSelector(selectCartTotal);
   const dispatch = useAppDispatch();
+  const { theme } = useTheme();
   
   const [street, setStreet] = useState<string>("");
   const [house, setHouse] = useState<string>("");
@@ -27,17 +29,17 @@ const OrderSection: React.FC = () => {
   }, [cartItems]);
 
   return (
-    <div className="order-section">
+    <div className={`order-section ${theme}`}>
       <h1 className="order-title">Finish your order</h1>
       
       {cartItems.length === 0 ? (
-        <div className="empty-cart-message">
+        <div className={`empty-cart-message ${theme}`}>
           <p>Your cart is empty. Add items from the menu.</p>
         </div>
       ) : (
-        <div className="order-list">
+        <div className={`order-list ${theme}`}>
           {cartItems.map((item) => (
-            <div className="order-item" key={item.product.id}>
+            <div className={`order-item ${theme}`} key={item.product.id}>
               <div className="order-item-left">
                 <div className="order-item-image">
                   <img 
@@ -72,7 +74,7 @@ const OrderSection: React.FC = () => {
         </div>
       )}
       
-      <div className="order-form-container">
+      <div className={`order-form-container ${theme}`}>
         {cartItems.length > 0 && (
           <div className="order-total">
             <span>Total:</span>

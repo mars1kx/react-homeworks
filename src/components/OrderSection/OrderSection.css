@@ -22,19 +22,21 @@
 }
 
 .empty-cart-message {
-  background-color: #fff;
+  background-color: var(--card-background);
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px var(--shadow-color);
   padding: 30px;
   text-align: center;
   margin-bottom: 30px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .empty-cart-message p {
-  color: #666;
+  color: var(--text-color);
   font-size: 16px;
   margin: 0;
   margin-bottom: 20px;
+  transition: color 0.3s ease;
 }
 
 .test-add-button {
@@ -57,9 +59,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 40px 20px;
-  background-color: #fff;
+  background-color: var(--card-background);
   border-radius: 8px;
   margin-bottom: 15px;
+  box-shadow: 0 2px 10px var(--shadow-color);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .order-item:last-child {
@@ -98,17 +102,20 @@
 
 .order-item-name {
   font-size: 16px;
-  color: #333;
+  color: var(--text-color);
   margin: 0;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .order-item-description {
   font-size: 14px;
-  color: #666;
+  color: var(--text-color);
+  opacity: 0.7;
   margin: 0;
   line-height: 1.4;
   max-height: 40px;
+  transition: color 0.3s ease;
 }
 
 .order-item-right {
@@ -128,9 +135,16 @@
   width: 40px;
   height: 40px;
   text-align: center;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 14px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark .order-item-quantity input {
+  background-color: #2d2d2d;
 }
 
 .order-item-remove {
@@ -163,8 +177,10 @@
   width: 100%;
   margin-bottom: 20px;
   padding: 10px 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border-color);
   font-size: 18px;
+  color: var(--text-color);
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .total-price {
@@ -180,27 +196,32 @@
 }
 
 .form-group label {
-  color: #333;
-  font-weight: 500;
-  width: 60px;
-  text-align: left;
-  margin-right: 15px;
+  margin-right: 10px;
+  min-width: 60px;
+  color: var(--text-color);
+  transition: color 0.3s ease;
 }
 
 .form-group input {
   flex: 1;
   height: 40px;
   padding: 0 15px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 14px;
-  background-color: #fff;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark .form-group input {
+  background-color: #2d2d2d;
 }
 
 .order-button {
   margin-top: 20px;
-  background-color: #35b8be;
-  color: white;
+  background-color: var(--button-primary);
+  color: var(--button-text);
   border: none;
   border-radius: 4px;
   padding: 12px 30px;

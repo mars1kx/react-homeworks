@@ -1,10 +1,11 @@
 .footer-wrapper {
   width: 100%;
-  background-color: #f5fbfc;
+  background-color: var(--footer-background);
   display: flex;
   justify-content: center;
   position: relative;
   overflow: hidden;
+  transition: background-color 0.3s ease;
 }
 
 .footer-wrapper::before {
@@ -20,13 +21,18 @@
   z-index: 0;
   pointer-events: none;
   background-repeat: no-repeat;
+  opacity: 0.7;
+}
+
+body.dark .footer-wrapper::before {
+  opacity: 0.1;
 }
 
 .footer {
   width: 100%;
   max-width: 1200px;
   padding: 60px 20px 40px;
-  color: #546285;
+  color: var(--text-color);
   position: relative;
   z-index: 1;
 }
@@ -61,7 +67,7 @@
 .footer-column .footer-column-titles {
   font-size: 13px;
   font-weight: 400;
-  color: #08090a;
+  color: var(--text-color);
   margin-bottom: 20px;
   letter-spacing: 0.5px;
   text-align: left;
@@ -81,7 +87,7 @@
 }
 
 .footer-column a {
-  color: #546285;
+  color: var(--text-color);
   text-decoration: none;
   font-size: 15px;
   font-weight: 400;
@@ -111,7 +117,7 @@
 .footer-bottom {
   width: 100%;
   height: 101px;
-  border-top: 1px solid rgba(126, 130, 143, 0.09);;
+  border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -143,9 +149,14 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: 1px solid rgba(84, 98, 133, 0.2);
+  border: 1px solid var(--border-color);
   transition: all 0.3s ease;
   border-radius: 50%;
+}
+
+body.dark .social-icon {
+  background-color: white;
+  border-color: white;
 }
 
 .social-icon img {
@@ -153,6 +164,10 @@
   height: auto;
   opacity: 0.5;
   transition: opacity 0.3s ease;
+}
+
+body.dark .social-icon img {
+  opacity: 0.7;
 }
 
 .social-icon:hover {

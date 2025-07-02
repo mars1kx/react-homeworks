@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { logoutUser } from '../../store/slices/authSlice'
 import { selectCartItemsCount } from '../../store/slices/cartSlice'
 import logger from '../../utils/logger'
+import ThemeToggle from '../ThemeToggle/ThemeToggle'
 
 const Header: React.FC = () => {
   const cartCount = useAppSelector(selectCartItemsCount);
@@ -45,6 +46,7 @@ const Header: React.FC = () => {
           </nav>
           
           <div className="cart-container">
+            <ThemeToggle />
             <button className="cart-button" onClick={() => navigate('/order')}>
               <img src={cartSvg} alt="Cart" className="cart-icon" />
               <div className="cart-badge">{cartCount}</div>

@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import './ProductCard.css';
 import { Meal } from '../../store/types';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface ProductCardProps {
   product: Meal;
@@ -9,6 +10,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   const [itemCount, setItemCount] = useState<number>(1);
+  const { theme } = useTheme();
 
   const handleCountChange = (value: number): void => {
     setItemCount(value < 1 ? 1 : value);
@@ -21,7 +23,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   }
 
   return (
-    <div className="product-card">
+    <div className={`product-card ${theme}`}>
       <div className="product-image-container">
         <img src={product.img} alt={product.meal} className="product-image" />
       </div>
