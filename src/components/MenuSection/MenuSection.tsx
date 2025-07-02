@@ -5,6 +5,8 @@ import ProductList from "../ProductList/ProductList";
 import Tooltip from "../Tooltip/Tooltip";
 import { saveOrderApi } from "../../__mocks__/api";
 import { Meal } from "../../store/types";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { addToCart } from "../../store/slices/cartSlice";
 
 interface OrderInfo {
   url: string;
@@ -20,6 +22,8 @@ interface MenuSectionProps {
 }
 
 const MenuSection: React.FC<MenuSectionProps> = ({ products }) => {
+  const dispatch = useAppDispatch();
+  const { currentUser } = useAppSelector(state => state.auth);
   const [visibleItemsCount, setVisibleItemsCount] = useState<number>(6);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [currentOrderInfo, setCurrentOrderInfo] = useState<OrderInfo | null>(null);
@@ -56,19 +60,25 @@ const MenuSection: React.FC<MenuSectionProps> = ({ products }) => {
   };
 
   const handleAddToCart = (id: string, count: number, product: Meal): void => {
+    if (!currentUser) {
+      alert("Please login to add items to the cart");
+      return;
+    }
+
     console.log(`Product #${id} added to cart in quantity ${count}`);
 
     handleSaveOrder(id, count);
 
-    if (product) {
-      const addToCartEvent = new CustomEvent("add-to-cart", {
-        detail: {
-          product: product,
-          count: count,
-        },
-      });
-      window.dispatchEvent(addToCartEvent);
-    }
+    dispatch(addToCart({
+      product: {
+        id: product.id,
+        meal: product.meal,
+        price: product.price,
+        img: product.img,
+        description: product.description
+      },
+      count
+    }));
   };
 
   const handleSaveOrder = async (mealId: string, count: number): Promise<void> => {
