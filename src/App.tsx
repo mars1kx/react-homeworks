@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Menu from './pages/Menu'
 import Login from './pages/Login'
 import Order from './pages/Order'
+import NotFound from './components/NotFound/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAppDispatch } from './store/hooks'
 import { checkAuthState } from './store/slices/authSlice'
@@ -34,6 +35,7 @@ const App: React.FC = () => {
                 <Order />
               </ProtectedRoute>
             } />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           
           <Footer />

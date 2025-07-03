@@ -107,7 +107,7 @@ const OrderSection: React.FC = () => {
         <button 
           onClick={handleOrderSubmit} 
           className="order-button" 
-          disabled={cartItems.length === 0}
+          disabled={cartItems.length === 0 || !street.trim() || !house.trim()}
         >
           Order
         </button>
